@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  server:
+    container_name: nest-server
+    build:
+      context: ./platzi-store
+      target: development
+    command: npm run start:dev
+    volumes:
+      - ./platzi-store:/usr/app
+      - ./usr/app/node_modules
+    ports:
+      - "3000:3000"
