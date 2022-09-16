@@ -2,16 +2,18 @@
 
 Este proyecto nace como práctica de la saga de cursos de NestJS que ofrece Platzi.
 
-**¿Qué lo hace un proyecto y no una práctica de estudio?**
+**¿Qué lo hace un proyecto y no una práctica de estudio?** El enfoque y su objetivo. 
 
-El enfoque y su objetivo. De entrada me propuse complementar el resultado de la saga con:
+De entrada me propuse complementar el resultado de la saga con:
 
 - [x] Un entorno completamente en Docker.
 - [ ] Crear una interfaz gráfica con SvelteKit y TailwindCSS.
-- Crear pruebas:
+
+Crear pruebas:
   - [ ] Unitarias.
   - [ ] *end to end*.
-- Crear documentación:
+
+Crear documentación:
   - [ ] Swagger.
   - [ ] Readme.
   - [ ] En comentarios dentro del código.
