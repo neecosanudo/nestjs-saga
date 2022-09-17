@@ -39,7 +39,7 @@ export class ProductsService {
     const found = this.products.findIndex((item) => item.id === id);
     if (found === -1) throw new Error('Product not found');
     this.products[found] = {
-      id,
+      ...this.products[found],
       ...payload,
     };
     return {
