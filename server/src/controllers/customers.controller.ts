@@ -6,42 +6,59 @@ import {
   Body,
   Put,
   Delete,
+  ParseIntPipe,
+  HttpStatus,
 } from '@nestjs/common';
+import { CreateCustomerDto, UpdateCustomerDto } from 'src/dtos/customer.dto';
+import { CustomersService } from 'src/services/customers.service';
 
 @Controller('customers')
 export class CustomersController {
+  constructor(private customerService: CustomersService) {}
+
   @Get()
-  getAll() {
-    return {
-      message: 'Customers list',
-    };
+  findAll() {
+    return this.customerService.findAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
-    return {
-      message: `Customers: ${id}`,
-    };
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({
+        errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE,
+      }),
+    )
+    id: number,
+  ) {
+    return this.customerService.findOne(id);
   }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'New customers created',
-      payload: payload,
-    };
+  create(@Body() payload: CreateCustomerDto) {
+    return this.customerService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+    @Body() payload: UpdateCustomerDto,
+  ) {
+    return this.customerService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return { id };
+  delete(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return this.customerService.delete(id);
   }
 }
