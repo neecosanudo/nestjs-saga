@@ -14,7 +14,7 @@ export class ProductsService {
       description: 'Description',
       price: 122,
       stock: 10,
-      image: 'url',
+      image: 'http://www.localhost:3000/img/products',
     },
   ];
 
@@ -27,6 +27,7 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
+
     return product;
   }
 
@@ -36,33 +37,36 @@ export class ProductsService {
       id: this.counterId,
       ...payload,
     };
+
     this.products.push(newProduct);
+
     return newProduct;
   }
 
   update(id: number, payload: UpdateProductDto) {
-    const found = this.products.findIndex((item) => item.id === id);
-    if (found === -1) throw new Error('Product not found');
-    this.products[found] = {
-      ...this.products[found],
+    const product = this.findOne(id);
+
+    const productIndex = this.products.findIndex((item) => item.id === id);
+    if (productIndex === -1) {
+      throw new NotFoundException(`Product #${id} not found`);
+    }
+
+    this.products[productIndex] = {
+      ...product,
       ...payload,
     };
-    return {
-      message: 'Product updated',
-      product: this.products[found],
-    };
+
+    return this.products[productIndex];
   }
 
   delete(id: number) {
-    const productFound = this.products.findIndex((item) => item.id === id);
-    if (productFound > 0) {
-      this.products.splice(productFound, 1);
-      return {
-        message: `Product with ID: ${id} deleted`,
-      };
+    const productIndex = this.products.findIndex((item) => item.id === id);
+    if (productIndex === -1) {
+      throw new NotFoundException(`Product #${id} not found`);
     }
-    return {
-      message: 'Product not found',
-    };
+
+    this.products.splice(productIndex, 1);
+
+    return true;
   }
 }
