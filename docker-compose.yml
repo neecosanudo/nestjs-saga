@@ -4,11 +4,11 @@ services:
   server:
     container_name: server
     build:
-      context: ./platzi-store
+      context: ./server
       target: development
     command: npm run start:dev
     volumes:
-      - ./platzi-store:/usr/app
+      - ./server:/usr/app
       - /usr/app/node_modules
     ports:
       - "3000:3000"
